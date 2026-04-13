@@ -1,5 +1,13 @@
 const scratchProjects = [
   {
+    id: "scratch-1305793098",
+    title: "Fortune teller",
+    summary: "Ask me any yes-or-no questions.",
+    tag: "Scratch",
+    embedHtml:
+      '<iframe src="https://scratch.mit.edu/projects/1305793098/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>'
+  },
+  {
     id: "scratch-1305462358",
     title: "Go go go",
     summary: "Let's race! Use \"z\" and \"x\" for the bat and \"n\" and \"m\" for the dog.",
