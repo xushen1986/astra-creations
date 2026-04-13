@@ -1,5 +1,13 @@
 const scratchProjects = [
   {
+    id: "scratch-1306013263",
+    title: "Monster faces",
+    summary: "Let us make a funny face!",
+    tag: "Scratch",
+    embedHtml:
+      '<iframe src="https://scratch.mit.edu/projects/1306013263/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>'
+  },
+  {
     id: "scratch-1305803578",
     title: "Galloping horse",
     summary: "Ask me any number questions.",
