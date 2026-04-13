@@ -71,6 +71,14 @@ function createProjectCard(project) {
   const embedWrap = document.createElement("div");
   embedWrap.className = "project-embed";
   embedWrap.innerHTML = project.embedHtml;
+  const iframe = embedWrap.querySelector("iframe");
+
+  if (iframe) {
+    iframe.removeAttribute("width");
+    iframe.removeAttribute("height");
+    iframe.setAttribute("loading", "lazy");
+    iframe.setAttribute("title", project.title);
+  }
 
   const actions = document.createElement("div");
   actions.className = "project-actions";

@@ -87,6 +87,13 @@ function renderProject(project) {
   const embedWrap = document.createElement("div");
   embedWrap.className = "project-embed detail-embed";
   embedWrap.innerHTML = project.embedHtml;
+  const iframe = embedWrap.querySelector("iframe");
+
+  if (iframe) {
+    iframe.removeAttribute("width");
+    iframe.removeAttribute("height");
+    iframe.setAttribute("title", project.title);
+  }
 
   section.append(label, title, copy, actions, embedWrap);
   projectDetailRoot.appendChild(section);
