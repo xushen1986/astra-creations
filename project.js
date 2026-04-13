@@ -60,7 +60,7 @@ function renderMissingState() {
 }
 
 function renderProject(project) {
-  document.title = `${project.title} | Astra's Work`;
+  document.title = `${project.title} | Astra Creates`;
 
   const section = document.createElement("section");
   section.className = "detail-card";
