@@ -140,7 +140,7 @@ function createProjectCard(project) {
   detailLink.href = getProjectUrl(project.id);
   detailLink.target = "_blank";
   detailLink.rel = "noreferrer";
-  detailLink.textContent = "Open Project Page";
+  detailLink.textContent = "Open";
 
   actions.appendChild(detailLink);
 
