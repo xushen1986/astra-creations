@@ -1,18 +1,10 @@
 const scratchProjects = [
   {
-    title: "Astra's First Shared Project",
-    summary:
-      "Replace this sample with Astra's actual shared Scratch work and a short description.",
-    tag: "Starter",
+    id: "scratch-1306323320",
+    title: "Astra's Scratch Project",
+    summary: "A shared Scratch creation by Astra, ready to be showcased on its own page.",
+    tag: "Scratch",
     embedHtml:
-      '<iframe src="https://scratch.mit.edu/projects/1181323467/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>'
-  },
-  {
-    title: "Another Scratch Creation",
-    summary:
-      "Duplicate this object in projects.js whenever you want to add another project to the gallery.",
-    tag: "Example",
-    embedHtml:
-      '<iframe src="https://scratch.mit.edu/projects/1181323467/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>'
+      '<iframe src="https://scratch.mit.edu/projects/1306323320/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>'
   }
 ];

@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Astra Creates</title>
+    <title>Astra's Work</title>
     <meta
       name="description"
-      content="A public gallery for Astra's shared Scratch projects."
+      content="A public home for Astra's Scratch projects and creative work."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -19,63 +19,129 @@
   <body>
     <div class="page-shell">
       <header class="hero">
-        <p class="eyebrow">Scratch Showcase</p>
-        <h1>Astra’s shared work, all in one place.</h1>
+        <p class="eyebrow">Astra's Portfolio</p>
+        <h1>Astra's work deserves its own stage.</h1>
         <p class="hero-copy">
-          This page is ready to publish publicly and built so you can keep adding
-          embedded Scratch projects without changing the layout.
+          This site is now focused entirely on showcasing Astra's creations. For
+          now, each piece comes from Scratch and can open into its own dedicated page.
         </p>
         <div class="hero-actions">
-          <a href="#gallery" class="button button-primary">View Projects</a>
-          <a href="#add-projects" class="button button-secondary">How To Add More</a>
+          <a href="#gallery" class="button button-primary">See Astra's Work</a>
+          <button id="open-modal-button" class="button button-secondary" type="button">
+            Add Scratch Project
+          </button>
         </div>
       </header>
 
       <main>
         <section class="intro-panel">
           <div>
-            <p class="section-label">About</p>
-            <h2>Made for sharing Astra’s creative experiments.</h2>
+            <p class="section-label">Showcase</p>
+            <h2>A living gallery for Astra's shared Scratch projects.</h2>
           </div>
           <p>
-            Add Scratch embeds in one file and the page will automatically
-            render each project as a polished gallery card.
+            Click the add button, paste a Scratch embed snippet, and the site will
+            generate a dedicated project page link for that work in this browser.
           </p>
         </section>
 
         <section id="gallery" class="gallery-section">
           <div class="section-heading">
             <div>
-              <p class="section-label">Gallery</p>
-              <h2>Featured Scratch projects</h2>
+              <p class="section-label">Featured Work</p>
+              <h2>Astra's current projects</h2>
             </div>
             <p class="section-copy">
-              Replace the sample entries with Astra’s real shared projects.
+              Every card links to a standalone page view for that project.
             </p>
           </div>
 
           <div id="project-grid" class="project-grid" aria-live="polite"></div>
         </section>
-
-        <section id="add-projects" class="guide-section">
-          <p class="section-label">Quick Edit Guide</p>
-          <h2>How to add a Scratch embed</h2>
-          <ol class="guide-list">
-            <li>Open <code>projects.js</code>.</li>
-            <li>Duplicate one project object in the <code>scratchProjects</code> array.</li>
-            <li>Paste Astra’s shared Scratch embed code into the <code>embedHtml</code> field.</li>
-            <li>Update the title, summary, and tag fields.</li>
-            <li>Save and republish the site.</li>
-          </ol>
-          <pre class="code-sample"><code>{
-  title: "New Project Title",
-  summary: "Short description of what Astra made.",
-  tag: "Animation",
-  embedHtml:
-    '&lt;iframe src="https://scratch.mit.edu/projects/123456789/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen&gt;&lt;/iframe&gt;'
-}</code></pre>
-        </section>
       </main>
+    </div>
+
+    <div
+      id="project-modal"
+      class="modal"
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+    >
+      <div class="modal-backdrop" data-close-modal="true"></div>
+      <div class="modal-panel">
+        <button
+          class="modal-close"
+          id="close-modal-button"
+          type="button"
+          aria-label="Close add project dialog"
+        >
+          ×
+        </button>
+
+        <p class="section-label">Add Scratch Work</p>
+        <h2 id="modal-title">Create a new Astra project page</h2>
+        <p class="modal-copy">
+          Paste the Scratch embed code below. The project will appear on the homepage
+          and get its own standalone detail page link.
+        </p>
+
+        <form id="project-form" class="project-form">
+          <label class="field">
+            <span>Project title</span>
+            <input
+              id="project-title"
+              name="title"
+              type="text"
+              placeholder="Astra's amazing project"
+              required
+            />
+          </label>
+
+          <label class="field">
+            <span>Short description</span>
+            <textarea
+              id="project-summary"
+              name="summary"
+              rows="3"
+              placeholder="What Astra made and why it's special."
+              required
+            ></textarea>
+          </label>
+
+          <label class="field">
+            <span>Category</span>
+            <input
+              id="project-tag"
+              name="tag"
+              type="text"
+              placeholder="Game, Story, Animation"
+              required
+            />
+          </label>
+
+          <label class="field">
+            <span>Scratch embed code</span>
+            <textarea
+              id="project-embed"
+              name="embed"
+              rows="6"
+              placeholder='<iframe src="https://scratch.mit.edu/projects/1306323320/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>'
+              required
+            ></textarea>
+          </label>
+
+          <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+
+          <div class="form-actions">
+            <button class="button button-primary" type="submit">Create Project Page</button>
+            <button class="button button-secondary" id="cancel-modal-button" type="button">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
 
     <script src="./projects.js"></script>
