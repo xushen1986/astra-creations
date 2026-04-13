@@ -78,6 +78,8 @@ function createProjectCard(project) {
   const detailLink = document.createElement("a");
   detailLink.className = "button button-secondary";
   detailLink.href = getProjectUrl(project.id);
+  detailLink.target = "_blank";
+  detailLink.rel = "noreferrer";
   detailLink.textContent = "Open Project Page";
 
   actions.appendChild(detailLink);

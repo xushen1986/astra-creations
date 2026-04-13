@@ -52,9 +52,11 @@ body::before {
 }
 
 .detail-shell {
-  display: grid;
-  align-items: center;
+  width: min(100vw, 1600px);
+  display: block;
   min-height: 100vh;
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 
 .hero,
@@ -197,6 +199,12 @@ h3 {
   padding: 28px;
 }
 
+.detail-card {
+  min-height: calc(100vh - 32px);
+  display: flex;
+  flex-direction: column;
+}
+
 .intro-panel {
   display: grid;
   gap: 16px;
@@ -259,13 +267,21 @@ h3 {
 
 .detail-embed {
   margin-top: 28px;
-  min-height: 420px;
+  min-height: calc(100vh - 250px);
+  flex: 1;
 }
 
 .project-embed iframe {
   display: block;
   width: 100%;
   max-width: 100%;
+}
+
+.detail-embed iframe {
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 250px);
+  border: 0;
 }
 
 .empty-state {
@@ -408,7 +424,7 @@ h3 {
   }
 
   .detail-embed {
-    min-height: 260px;
+    min-height: calc(100vh - 220px);
   }
 
   .modal-panel {
