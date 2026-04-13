@@ -48,6 +48,48 @@ function getProjectUrl(projectId) {
   return `./project.html?id=${encodeURIComponent(projectId)}`;
 }
 
+function serializeProjects(projects) {
+  const formattedProjects = JSON.stringify(projects, null, 2)
+    .replace(/"([^"]+)":/g, "$1:")
+    .replace(/</g, "\\u003c")
+    .replace(/>/g, "\\u003e");
+
+  return `const scratchProjects = ${formattedProjects};\n`;
+}
+
+async function writeProjectsLibrary(projects) {
+  const fileContents = serializeProjects(projects);
+
+  if ("showSaveFilePicker" in window) {
+    const handle = await window.showSaveFilePicker({
+      suggestedName: "projects.js",
+      types: [
+        {
+          description: "JavaScript",
+          accept: {
+            "text/javascript": [".js"]
+          }
+        }
+      ]
+    });
+    const writable = await handle.createWritable();
+    await writable.write(fileContents);
+    await writable.close();
+    return "saved";
+  }
+
+  const blob = new Blob([fileContents], { type: "text/javascript" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "projects.js";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+  return "downloaded";
+}
+
 function normalizeEmbedCode(embedHtml) {
   const trimmedValue = embedHtml.trim();
 
@@ -140,7 +182,7 @@ function closeModal() {
   formStatus.textContent = "";
 }
 
-function handleProjectSubmit(event) {
+async function handleProjectSubmit(event) {
   event.preventDefault();
 
   const formData = new FormData(projectForm);
@@ -167,8 +209,11 @@ function handleProjectSubmit(event) {
     filteredProjects.unshift(project);
     saveStoredProjects(filteredProjects);
 
+    const allProjects = getAllProjects();
+    const exportResult = await writeProjectsLibrary(allProjects);
+
     renderProjects();
-    formStatus.innerHTML = `Project saved. <a href="${getProjectUrl(id)}">Open its dedicated page</a>.`;
+    formStatus.innerHTML = `Project saved. <a href="${getProjectUrl(id)}">Open its dedicated page</a>. Updated <code>projects.js</code> ${exportResult === "saved" ? "was saved" : "was downloaded"} for you too.`;
     projectForm.reset();
   } catch (error) {
     formStatus.textContent = error.message;
