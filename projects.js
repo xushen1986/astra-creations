@@ -51,7 +51,7 @@ const scratchProjects = [
   {
     id: "scratch-1306323320",
     title: "Happy birthday!",
-    summary: "Astra wants to wish her friends a big happy birthday!",
+    summary: "Turn the sound on. :) Astra wants to wish her friends a big happy birthday!",
     tag: "Scratch",
     embedHtml:
       '<iframe src="https://scratch.mit.edu/projects/1306323320/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>'
