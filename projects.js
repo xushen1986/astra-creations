@@ -1,5 +1,14 @@
 const scratchProjects = [
   {
+    id: "scratch-1305026507",
+    title: "Dancing dinosaur",
+    summary:
+      "Let's party! Use left and right key to control one of the dinosaurs, and press \"x\" to make they shout \"Party!\"",
+    tag: "Scratch",
+    embedHtml:
+      '<iframe src="https://scratch.mit.edu/projects/1305026507/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>'
+  },
+  {
     id: "scratch-1304812070",
     title: "Rainbow cat art",
     summary: "Astra's first Scratch project",
