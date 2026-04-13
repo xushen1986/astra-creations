@@ -31,7 +31,17 @@ function saveStoredProjects(projects) {
 
 function getAllProjects() {
   const storedProjects = getStoredProjects();
-  return [...scratchProjects, ...storedProjects];
+  const projectMap = new Map();
+
+  storedProjects.forEach((project) => {
+    projectMap.set(project.id, project);
+  });
+
+  scratchProjects.forEach((project) => {
+    projectMap.set(project.id, project);
+  });
+
+  return Array.from(projectMap.values());
 }
 
 function getProjectUrl(projectId) {

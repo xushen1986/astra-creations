@@ -16,7 +16,17 @@ function getStoredProjects() {
 }
 
 function getAllProjects() {
-  return [...getBaseProjects(), ...getStoredProjects()];
+  const projectMap = new Map();
+
+  getStoredProjects().forEach((project) => {
+    projectMap.set(project.id, project);
+  });
+
+  getBaseProjects().forEach((project) => {
+    projectMap.set(project.id, project);
+  });
+
+  return Array.from(projectMap.values());
 }
 
 function getProjectIdFromUrl() {
