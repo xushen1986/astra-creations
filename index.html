@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Astra Creates</title>
+    <meta
+      name="description"
+      content="A public gallery for Astra's shared Scratch projects."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <p class="eyebrow">Scratch Showcase</p>
+        <h1>Astra’s shared work, all in one place.</h1>
+        <p class="hero-copy">
+          This page is ready to publish publicly and built so you can keep adding
+          embedded Scratch projects without changing the layout.
+        </p>
+        <div class="hero-actions">
+          <a href="#gallery" class="button button-primary">View Projects</a>
+          <a href="#add-projects" class="button button-secondary">How To Add More</a>
+        </div>
+      </header>
+
+      <main>
+        <section class="intro-panel">
+          <div>
+            <p class="section-label">About</p>
+            <h2>Made for sharing Astra’s creative experiments.</h2>
+          </div>
+          <p>
+            Add Scratch embeds in one file and the page will automatically
+            render each project as a polished gallery card.
+          </p>
+        </section>
+
+        <section id="gallery" class="gallery-section">
+          <div class="section-heading">
+            <div>
+              <p class="section-label">Gallery</p>
+              <h2>Featured Scratch projects</h2>
+            </div>
+            <p class="section-copy">
+              Replace the sample entries with Astra’s real shared projects.
+            </p>
+          </div>
+
+          <div id="project-grid" class="project-grid" aria-live="polite"></div>
+        </section>
+
+        <section id="add-projects" class="guide-section">
+          <p class="section-label">Quick Edit Guide</p>
+          <h2>How to add a Scratch embed</h2>
+          <ol class="guide-list">
+            <li>Open <code>projects.js</code>.</li>
+            <li>Duplicate one project object in the <code>scratchProjects</code> array.</li>
+            <li>Paste Astra’s shared Scratch embed code into the <code>embedHtml</code> field.</li>
+            <li>Update the title, summary, and tag fields.</li>
+            <li>Save and republish the site.</li>
+          </ol>
+          <pre class="code-sample"><code>{
+  title: "New Project Title",
+  summary: "Short description of what Astra made.",
+  tag: "Animation",
+  embedHtml:
+    '&lt;iframe src="https://scratch.mit.edu/projects/123456789/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen&gt;&lt;/iframe&gt;'
+}</code></pre>
+        </section>
+      </main>
+    </div>
+
+    <script src="./projects.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
