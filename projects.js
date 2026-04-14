@@ -1,5 +1,13 @@
 const scratchProjects = [
   {
+    id: "scratch-1306436699",
+    title: "Doubling numbers",
+    summary: "Tell me a number and I can keep doubling it. Just keep pressing \"space\" key.",
+    tag: "Scratch",
+    embedHtml:
+      '<iframe src="https://scratch.mit.edu/projects/1306436699/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>'
+  },
+  {
     id: "scratch-1306013263",
     title: "Monster faces",
     summary: "Let us make a funny face!",
