@@ -1,4 +1,10 @@
 const STORAGE_KEY = "astraScratchProjects";
+const GITHUB_TOKEN_KEY = "astraGithubToken";
+const GITHUB_OWNER = "xushen1986";
+const GITHUB_REPO = "astra-creations";
+const GITHUB_BRANCH = "main";
+const GITHUB_FILE_PATH = "projects.js";
+const GITHUB_API_VERSION = "2022-11-28";
 const projectGrid = document.getElementById("project-grid");
 const modal = document.getElementById("project-modal");
 const openModalButton = document.getElementById("open-modal-button");
@@ -6,6 +12,7 @@ const closeModalButton = document.getElementById("close-modal-button");
 const cancelModalButton = document.getElementById("cancel-modal-button");
 const projectForm = document.getElementById("project-form");
 const formStatus = document.getElementById("form-status");
+const githubTokenInput = document.getElementById("github-token");
 
 function slugify(value) {
   return value
@@ -57,37 +64,71 @@ function serializeProjects(projects) {
   return `const scratchProjects = ${formattedProjects};\n`;
 }
 
-async function writeProjectsLibrary(projects) {
-  const fileContents = serializeProjects(projects);
+function getSavedGithubToken() {
+  return localStorage.getItem(GITHUB_TOKEN_KEY) || "";
+}
 
-  if ("showSaveFilePicker" in window) {
-    const handle = await window.showSaveFilePicker({
-      suggestedName: "projects.js",
-      types: [
-        {
-          description: "JavaScript",
-          accept: {
-            "text/javascript": [".js"]
-          }
-        }
-      ]
-    });
-    const writable = await handle.createWritable();
-    await writable.write(fileContents);
-    await writable.close();
-    return "saved";
+function saveGithubToken(token) {
+  localStorage.setItem(GITHUB_TOKEN_KEY, token);
+}
+
+function encodeBase64(value) {
+  const bytes = new TextEncoder().encode(value);
+  let binary = "";
+
+  bytes.forEach((byte) => {
+    binary += String.fromCharCode(byte);
+  });
+
+  return btoa(binary);
+}
+
+async function getRemoteProjectsFile(token) {
+  const response = await fetch(
+    `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}?ref=${GITHUB_BRANCH}`,
+    {
+      headers: {
+        Accept: "application/vnd.github+json",
+        Authorization: `Bearer ${token}`,
+        "X-GitHub-Api-Version": GITHUB_API_VERSION
+      }
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("GitHub could not open projects.js. Check your token and repository permissions.");
   }
 
-  const blob = new Blob([fileContents], { type: "text/javascript" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "projects.js";
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  URL.revokeObjectURL(url);
-  return "downloaded";
+  return response.json();
+}
+
+async function publishProjectsLibrary(projects, token, title) {
+  const currentFile = await getRemoteProjectsFile(token);
+  const content = serializeProjects(projects);
+  const response = await fetch(
+    `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`,
+    {
+      method: "PUT",
+      headers: {
+        Accept: "application/vnd.github+json",
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        "X-GitHub-Api-Version": GITHUB_API_VERSION
+      },
+      body: JSON.stringify({
+        message: `Add ${title} project`,
+        content: encodeBase64(content),
+        sha: currentFile.sha,
+        branch: GITHUB_BRANCH
+      })
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("GitHub could not publish the project live. Your token may need Contents write access.");
+  }
+
+  return response.json();
 }
 
 function normalizeEmbedCode(embedHtml) {
@@ -170,6 +211,7 @@ function openModal() {
   modal.classList.add("is-open");
   modal.setAttribute("aria-hidden", "false");
   formStatus.textContent = "";
+  githubTokenInput.value = getSavedGithubToken();
   requestAnimationFrame(() => {
     document.getElementById("project-title").focus();
   });
@@ -190,8 +232,13 @@ async function handleProjectSubmit(event) {
   const summary = String(formData.get("summary") || "").trim();
   const tag = String(formData.get("tag") || "").trim();
   const rawEmbed = String(formData.get("embed") || "");
+  const githubToken = String(formData.get("githubToken") || "").trim();
 
   try {
+    if (!githubToken) {
+      throw new Error("Paste your GitHub token to publish the project live.");
+    }
+
     const embedHtml = normalizeEmbedCode(rawEmbed);
     const scratchId = extractScratchProjectId(embedHtml);
     const id = scratchId ? `scratch-${scratchId}` : `custom-${slugify(title)}`;
@@ -208,13 +255,15 @@ async function handleProjectSubmit(event) {
     const filteredProjects = existingStoredProjects.filter((entry) => entry.id !== id);
     filteredProjects.unshift(project);
     saveStoredProjects(filteredProjects);
+    saveGithubToken(githubToken);
 
     const allProjects = getAllProjects();
-    const exportResult = await writeProjectsLibrary(allProjects);
+    await publishProjectsLibrary(allProjects, githubToken, title);
 
     renderProjects();
-    formStatus.innerHTML = `Project saved. <a href="${getProjectUrl(id)}">Open its dedicated page</a>. Updated <code>projects.js</code> ${exportResult === "saved" ? "was saved" : "was downloaded"} for you too.`;
+    formStatus.innerHTML = `Project published live. <a href="${getProjectUrl(id)}">Open its dedicated page</a>.`;
     projectForm.reset();
+    githubTokenInput.value = getSavedGithubToken();
   } catch (error) {
     formStatus.textContent = error.message;
   }

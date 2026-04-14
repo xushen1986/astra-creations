@@ -87,8 +87,8 @@
           and get its own standalone detail page link.
         </p>
         <p class="modal-copy">
-          After saving, the page will also generate an updated <code>projects.js</code>
-          file so you can keep the published library in sync.
+          Add your GitHub token once in this browser, then the site can update
+          <code>projects.js</code> and publish the project live directly.
         </p>
 
         <form id="project-form" class="project-form">
@@ -136,10 +136,22 @@
             ></textarea>
           </label>
 
+          <label class="field">
+            <span>GitHub token</span>
+            <input
+              id="github-token"
+              name="githubToken"
+              type="password"
+              placeholder="Token with repository contents write access"
+              autocomplete="off"
+              required
+            />
+          </label>
+
           <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
 
           <div class="form-actions">
-            <button class="button button-primary" type="submit">Create Project Page</button>
+            <button class="button button-primary" type="submit">Add And Publish Live</button>
             <button class="button button-secondary" id="cancel-modal-button" type="button">
               Cancel
             </button>
