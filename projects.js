@@ -1,5 +1,12 @@
 const scratchProjects = [
   {
+    id: "scratch-1306937792",
+    title: "Clone lab",
+    summary: "Just experimenting with cloning",
+    tag: "Scratch",
+    embedHtml: "\u003ciframe src=\"https://scratch.mit.edu/projects/1306937792/embed\" allowtransparency=\"true\" width=\"485\" height=\"402\" frameborder=\"0\" scrolling=\"no\" allowfullscreen\u003e\u003c/iframe\u003e"
+  },
+  {
     id: "scratch-1306941075",
     title: "Sunset",
     summary: "Watch the sun goes down",
